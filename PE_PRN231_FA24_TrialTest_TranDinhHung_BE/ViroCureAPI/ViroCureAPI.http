@@ -1,0 +1,6 @@
+@ViroCureAPI_HostAddress = http://localhost:5010
+
+GET {{ViroCureAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

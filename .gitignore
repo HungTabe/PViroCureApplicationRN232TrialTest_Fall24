@@ -1,0 +1,48 @@
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+bin/
+obj/
+*.csproj.user
+
+# ASP.NET Core
+wwwroot/
+
+# NuGet Packages
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.lock.json
+
+# Database
+*.mdf
+*.ldf
+
+# Logs
+*.log
+logs/
+
+# Environment Variables
+appsettings.Development.json
+appsettings.Production.json
+.env
+
+# Dependency Directories
+node_modules/
+bower_components/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.code-workspace
+
+# Miscellaneous
+*.cache
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
