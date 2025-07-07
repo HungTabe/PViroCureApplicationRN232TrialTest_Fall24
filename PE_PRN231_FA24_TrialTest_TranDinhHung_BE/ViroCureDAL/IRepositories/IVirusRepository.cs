@@ -7,10 +7,9 @@ using ViroCureDAL.Entities;
 
 namespace ViroCureDAL.IRepositories
 {
-    public interface IPersonRepository
+    public interface IVirusRepository
     {
-        // login
-        Task<ViroCureUser> LoginAsync(string email, string password);
-        Task<Person> CreatePersonAsync(Person person);
+        Task<Virus?> GetVirusByNameAsync(string virusName);
+        Task<Virus> CreateVirusAsync(Virus virus);
     }
 }

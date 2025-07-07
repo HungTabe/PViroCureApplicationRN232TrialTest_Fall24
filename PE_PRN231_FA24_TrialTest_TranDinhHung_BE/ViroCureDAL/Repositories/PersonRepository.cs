@@ -20,5 +20,11 @@ namespace ViroCureDAL.Repositories
         {
             return await _context.ViroCureUsers.FirstOrDefaultAsync(e => e.Email == email && e.Password == password);
         }
+        public async Task<Person> CreatePersonAsync(Person person)
+        {
+            _context.People.Add(person);
+            await _context.SaveChangesAsync();
+            return person;
+        }
     }
 }
