@@ -26,5 +26,10 @@ namespace ViroCureDAL.Repositories
             await _context.SaveChangesAsync();
             return person;
         }
+
+        public async Task<bool> PersonExistsAsync(int personId)
+        {
+            return await _context.People.AnyAsync(p => p.PersonId == personId);
+        }
     }
 }

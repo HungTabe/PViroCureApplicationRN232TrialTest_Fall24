@@ -13,7 +13,9 @@ namespace ViroCureBLL.DTOs
         public int PersonId { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z][a-zA-Z0-9@#\s]*[A-Z][a-zA-Z0-9@#\s]*$", 
+
+        [RegularExpression(@"^[A-Z][a-zA-Z0-9@#\s]*$", 
+
             ErrorMessage = "Each word of the Fullname must begin with the capital letter")]
         public string FullName { get; set; } = string.Empty;
 
