@@ -24,14 +24,11 @@ namespace ViroCureBLL.Services
             {
                 throw new ArgumentException("Value for Birthday < 01-01-2007");
             }
-
             // Check if person already exists
             if (await _personRepository.PersonExistsAsync(request.PersonId))
             {
                 throw new InvalidOperationException("Person with this ID already exists");
             }
-
-            // Create person entity
             var person = new Person
             {
                 PersonId = request.PersonId,
@@ -40,8 +37,6 @@ namespace ViroCureBLL.Services
                 Phone = request.Phone,
                 PersonViruses = new List<PersonVirus>()
             };
-
-            // Process viruses
             foreach (var virusDto in request.Viruses)
             {
                 // Check if virus exists, if not create it
@@ -65,7 +60,6 @@ namespace ViroCureBLL.Services
 
                 person.PersonViruses.Add(personVirus);
             }
-
             // Save person
             await _personRepository.CreatePersonAsync(person);
 
