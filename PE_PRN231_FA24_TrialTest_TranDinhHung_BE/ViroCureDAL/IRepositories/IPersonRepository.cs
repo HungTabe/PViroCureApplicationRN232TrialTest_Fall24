@@ -11,5 +11,7 @@ namespace ViroCureDAL.IRepositories
     {
         // login
         Task<ViroCureUser> LoginAsync(string email, string password);
+        Task<Person> CreatePersonAsync(Person person);
+        Task<bool> PersonExistsAsync(int personId);
     }
 }
