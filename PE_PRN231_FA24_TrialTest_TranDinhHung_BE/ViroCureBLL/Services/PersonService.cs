@@ -39,10 +39,9 @@ namespace ViroCureBLL.Services
                 Phone = request.Phone,
                 PersonViruses = new List<PersonVirus>()
             };
-
             foreach (var virusDto in request.Viruses)
             {
-                // Check if virus exists - if not create it
+
                 var virus = await _virusRepository.GetVirusByNameAsync(virusDto.VirusName);
                 if (virus == null)
                 {
