@@ -27,7 +27,12 @@ builder.Services.AddDbContext<ViroCureFal2024dbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Register BLL and DAL
 builder.Services.AddScoped<ILoginService,LoginService>();
+// Register Person BLL and DAL
+builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+// Register Virus BLL and DAL
+builder.Services.AddScoped<IVirusRepository, VirusRepository>();
+
 
 // JWT Configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");

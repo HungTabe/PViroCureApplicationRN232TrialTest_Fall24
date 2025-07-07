@@ -10,5 +10,8 @@ namespace ViroCureDAL.Repositories
 {
     public class ViroCureUserRepository : GenericRepository<ViroCureUser>
     {
+        public ViroCureUserRepository(ViroCureFal2024dbContext context) : base(context)
+        {
+        }
     }
 }
