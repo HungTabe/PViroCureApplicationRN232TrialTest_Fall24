@@ -110,5 +110,62 @@ namespace ViroCureBLL.Services
                 }).ToList()
             }).ToList();
         }
+
+        public async Task<ApiResponseDto> UpdatePersonAsync(int personId, UpdatePersonRequestDto request)
+        {
+            // Validate birthday
+            if (request.BirthDay >= new DateTime(2007, 1, 1))
+            {
+                throw new ArgumentException("Value for Birthday < 01-01-2007");
+            }
+
+            // Check if person exists
+            var existingPerson = await _personRepository.GetPersonWithVirusesAsync(personId);
+            if (existingPerson == null)
+            {
+                throw new InvalidOperationException("Person not found");
+            }
+
+            // Update person properties
+            existingPerson.Fullname = request.FullName;
+            existingPerson.BirthDay = DateOnly.FromDateTime(request.BirthDay);
+            existingPerson.Phone = request.Phone;
+
+            // Clear existing virus relationships
+            existingPerson.PersonViruses.Clear();
+
+            // Process viruses
+            foreach (var virusDto in request.Viruses)
+            {
+                // Check if virus exists, if not create it
+                var virus = await _virusRepository.GetVirusByNameAsync(virusDto.VirusName);
+                if (virus == null)
+                {
+                    virus = new Virus
+                    {
+                        VirusName = virusDto.VirusName
+                    };
+                    virus = await _virusRepository.CreateVirusAsync(virus);
+                }
+
+                // Create person-virus relationship
+                var personVirus = new PersonVirus
+                {
+                    PersonId = existingPerson.PersonId,
+                    VirusId = virus.VirusId,
+                    ResistanceRate = virusDto.ResistanceRate
+                };
+
+                existingPerson.PersonViruses.Add(personVirus);
+            }
+
+            // Update person
+            await _personRepository.UpdatePersonAsync(existingPerson);
+
+            return new ApiResponseDto
+            {
+                Message = "Person and viruses updated successfully"
+            };
+        }
     }
 } 
