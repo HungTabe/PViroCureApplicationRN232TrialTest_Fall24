@@ -167,5 +167,10 @@ namespace ViroCureBLL.Services
                 Message = "Person and viruses updated successfully"
             };
         }
+
+        public async Task<bool> DeletePersonAsync(int personId)
+        {
+            return await _personRepository.DeletePersonAsync(personId);
+        }
     }
 } 

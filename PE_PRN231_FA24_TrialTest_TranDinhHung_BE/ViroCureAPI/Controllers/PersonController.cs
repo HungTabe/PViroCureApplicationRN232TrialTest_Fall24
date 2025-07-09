@@ -112,6 +112,24 @@ namespace ViroCureAPI.Controllers
             }
         }
 
+        [HttpDelete("person/{id}")]
+        public async Task<IActionResult> DeletePerson(int id)
+        {
+            try
+            {
+                var result = await _personService.DeletePersonAsync(id);
+                if (!result)
+                {
+                    return NotFound(new { error = "Person not found" });
+                }
+
+                return Ok(new { message = "Person deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred" });
+            }
+        }
 
     }
 } 

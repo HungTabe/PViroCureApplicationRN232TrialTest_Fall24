@@ -20,6 +20,9 @@ namespace ViroCureDAL.IRepositories
         Task<List<Person>> GetAllPersonsWithVirusesAsync();
         // Func : Update person data
         Task<Person> UpdatePersonAsync(Person person);
+        // Func : Delete peron by id
+        Task<bool> DeletePersonAsync(int personId);
+
 
 
 
