@@ -11,6 +11,9 @@ namespace ViroCureBLL.IServices
         Task<List<PersonResponseDto>> GetAllPersonsAsync();
         //Function update person by id
         Task<ApiResponseDto> UpdatePersonAsync(int personId, UpdatePersonRequestDto request);
+        //Function delete person by id
+        Task<bool> DeletePersonAsync(int personId);
+
 
 
 

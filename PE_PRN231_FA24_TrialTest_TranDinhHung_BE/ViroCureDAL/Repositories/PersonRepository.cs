@@ -73,5 +73,23 @@ namespace ViroCureDAL.Repositories
             await _context.SaveChangesAsync();
             return existingPerson;
         }
+
+        public async Task<bool> DeletePersonAsync(int personId)
+        {
+            var person = await _context.People
+                .Include(p => p.PersonViruses)
+                .FirstOrDefaultAsync(p => p.PersonId == personId);
+
+            if (person == null)
+                return false;
+
+            // Remove virus relationships first
+            _context.PersonViruses.RemoveRange(person.PersonViruses);
+
+            // Remove person
+            _context.People.Remove(person);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
