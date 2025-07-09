@@ -4,7 +4,7 @@ using ViroCureBLL.IServices;
 
 namespace ViroCureAPI.Controllers
 {
-    [Route("api/person")]
+    [Route("api")]
     [ApiController]
     public class PersonController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace ViroCureAPI.Controllers
             _personService = personService;
         }
 
-        [HttpPost]
+        [HttpPost("person")]
         public async Task<IActionResult> AddPerson([FromBody] AddPersonRequestDto request)
         {
             try
@@ -47,5 +47,24 @@ namespace ViroCureAPI.Controllers
                 return StatusCode(500, new { error = "An unexpected error occurred" });
             }
         }
+
+        [HttpGet("person/{id}")]
+        public async Task<IActionResult> GetPerson(int id)
+        {
+            try
+            {
+                var person = await _personService.GetPersonAsync(id);
+                if (person == null)
+                {
+                    return NotFound(new { error = "Person not found" });
+                }
+                return Ok(person);
+            }
+            catch
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred" });
+            }
+        }
+
     }
 } 

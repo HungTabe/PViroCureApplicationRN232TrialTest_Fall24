@@ -31,5 +31,13 @@ namespace ViroCureDAL.Repositories
         {
             return await _context.People.AnyAsync(p => p.PersonId == personId);
         }
+
+        public async Task<Person?> GetPersonWithVirusesAsync(int personId)
+        {
+            return await _context.People
+                .Include(p => p.PersonViruses)
+                .ThenInclude(pv => pv.Virus)
+                .FirstOrDefaultAsync(p => p.PersonId == personId);
+        }
     }
 }

@@ -12,7 +12,10 @@ namespace ViroCureDAL.IRepositories
         // login
         Task<ViroCureUser> LoginAsync(string email, string password);
         Task<Person> CreatePersonAsync(Person person);
-
         Task<bool> PersonExistsAsync(int personId);
+
+        // Func : Get person data by id : Get person data + Get virus data
+        Task<Person?> GetPersonWithVirusesAsync(int personId);
+
     }
 }
