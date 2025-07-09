@@ -6,7 +6,7 @@ namespace ViroCureBLL.DTOs
     {
         public int PersonId { get; set; }
         public string FullName { get; set; } = string.Empty;
-        public DateTime BirthDay { get; set; }
+        public DateOnly BirthDay { get; set; }
         public string Phone { get; set; } = string.Empty;
         public List<VirusResponseDto> Viruses { get; set; } = new List<VirusResponseDto>();
     }

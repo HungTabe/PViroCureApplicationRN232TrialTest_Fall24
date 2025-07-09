@@ -72,5 +72,25 @@ namespace ViroCureBLL.Services
                 Message = "Person and viruses added successfully"
             };
         }
+
+        public async Task<PersonResponseDto?> GetPersonAsync(int personId)
+        {
+            var person = await _personRepository.GetPersonWithVirusesAsync(personId);
+            if (person == null)
+                return null;
+
+            return new PersonResponseDto
+            {
+                PersonId = person.PersonId,
+                FullName = person.Fullname,
+                BirthDay = person.BirthDay,
+                Phone = person.Phone,
+                Viruses = person.PersonViruses.Select(pv => new VirusResponseDto
+                {
+                    VirusName = pv.Virus.VirusName,
+                    ResistanceRate = pv.ResistanceRate ?? 0
+                }).ToList()
+            };
+        }
     }
 } 
