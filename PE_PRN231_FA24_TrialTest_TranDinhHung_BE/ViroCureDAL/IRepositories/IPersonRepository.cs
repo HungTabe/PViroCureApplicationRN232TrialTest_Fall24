@@ -16,6 +16,9 @@ namespace ViroCureDAL.IRepositories
 
         // Func : Get person data by id : Get person data + Get virus data
         Task<Person?> GetPersonWithVirusesAsync(int personId);
+        // Func : Get all person data : Get person data + Get virus data
+        Task<List<Person>> GetAllPersonsWithVirusesAsync();
+
 
     }
 }
