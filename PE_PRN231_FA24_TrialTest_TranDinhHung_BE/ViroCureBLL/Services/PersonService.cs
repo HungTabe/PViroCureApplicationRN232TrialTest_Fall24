@@ -92,5 +92,23 @@ namespace ViroCureBLL.Services
                 }).ToList()
             };
         }
+
+        public async Task<List<PersonResponseDto>> GetAllPersonsAsync()
+        {
+            var persons = await _personRepository.GetAllPersonsWithVirusesAsync();
+
+            return persons.Select(person => new PersonResponseDto
+            {
+                PersonId = person.PersonId,
+                FullName = person.Fullname,
+                BirthDay = person.BirthDay,
+                Phone = person.Phone,
+                Viruses = person.PersonViruses.Select(pv => new VirusResponseDto
+                {
+                    VirusName = pv.Virus.VirusName,
+                    ResistanceRate = pv.ResistanceRate ?? 0
+                }).ToList()
+            }).ToList();
+        }
     }
 } 

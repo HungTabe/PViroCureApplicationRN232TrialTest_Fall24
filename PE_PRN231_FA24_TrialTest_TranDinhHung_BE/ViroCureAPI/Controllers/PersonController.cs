@@ -66,5 +66,19 @@ namespace ViroCureAPI.Controllers
             }
         }
 
+        [HttpGet("persons")]
+        public async Task<IActionResult> GetAllPersons()
+        {
+            try
+            {
+                var persons = await _personService.GetAllPersonsAsync();
+                return Ok(persons);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred" });
+            }
+        }
+
     }
 } 
