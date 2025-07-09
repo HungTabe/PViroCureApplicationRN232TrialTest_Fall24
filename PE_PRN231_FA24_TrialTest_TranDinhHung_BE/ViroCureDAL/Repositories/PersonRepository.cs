@@ -47,5 +47,31 @@ namespace ViroCureDAL.Repositories
                 .ThenInclude(pv => pv.Virus)
                 .ToListAsync();
         }
+
+        public async Task<Person> UpdatePersonAsync(Person person)
+        {
+            var existingPerson = await _context.People
+                .Include(p => p.PersonViruses)
+                .FirstOrDefaultAsync(p => p.PersonId == person.PersonId);
+
+            if (existingPerson == null)
+                throw new InvalidOperationException("Person not found");
+
+            existingPerson.Fullname = person.Fullname;
+            existingPerson.BirthDay = person.BirthDay;
+            existingPerson.Phone = person.Phone;
+            existingPerson.PersonViruses = null;
+
+            await _context.SaveChangesAsync();
+
+            var existingPersonA = await _context.People
+                .Include(p => p.PersonViruses)
+                .FirstOrDefaultAsync(p => p.PersonId == person.PersonId);
+
+            existingPersonA.PersonViruses = person.PersonViruses;
+
+            await _context.SaveChangesAsync();
+            return existingPerson;
+        }
     }
 }

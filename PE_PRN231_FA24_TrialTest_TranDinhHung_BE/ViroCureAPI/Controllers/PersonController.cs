@@ -80,5 +80,38 @@ namespace ViroCureAPI.Controllers
             }
         }
 
+        [HttpPut("person/{id}")]
+        public async Task<IActionResult> UpdatePerson(int id, [FromBody] UpdatePersonRequestDto request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                        .ToList();
+
+                    return BadRequest(new { error = string.Join(", ", errors) });
+                }
+
+                var response = await _personService.UpdatePersonAsync(id, request);
+                return Ok(response);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An unexpected error occurred" });
+            }
+        }
+
+
     }
 } 
